@@ -1,7 +1,4 @@
-﻿# CMakeList.txt: проект CMake для SDLGame; включите исходный код и определения,
-# укажите здесь логику для конкретного проекта.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.8)
 
 # Включение горячей перезагрузки для компиляторов MSVC, если поддерживается.
 if (POLICY CMP0141)
@@ -16,7 +13,6 @@ file(GLOB_RECURSE GAME_SRC "src/*.cpp" "src/*.hpp")
 add_subdirectory(deps/SDL EXCLUDE_FROM_ALL)
 add_subdirectory(deps/tinyxml2)
 
-# Добавьте источник в исполняемый файл этого проекта.
 add_executable (SDLGame ${GAME_SRC})
 
 target_link_libraries(SDLGame PRIVATE SDL3::SDL3 tinyxml2::tinyxml2)
@@ -28,4 +24,6 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET SDLGame PROPERTY CXX_STANDARD 20)
 endif()
 
-# TODO: Добавьте тесты и целевые объекты, если это необходимо.
+# судя по всему оно не работает при открытии cmakelists напрямую в visual studio
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT SDLGame)
+
