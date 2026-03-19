@@ -19,6 +19,8 @@ target_link_libraries(SDLGame PRIVATE SDL3::SDL3 tinyxml2::tinyxml2)
 if (WIN32)
 add_custom_command(TARGET SDLGame POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
 endif()
+#add_custom_command(TARGET SDLGame POST_BUILD COMMAND "${CMAKE_COMMAND}" -E make_directory ${CMAKE_BINARY_DIR}/assets $<TARGET_FILE_DIR:SDLGame> VERBATIM)
+#add_custom_command(TARGET SDLGame POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy ${CMAKE_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/assets VERBATIM)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET SDLGame PROPERTY CXX_STANDARD 20)

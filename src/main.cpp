@@ -8,11 +8,11 @@
 //#include "game/engine/engine.hpp"
 #include "game/game.hpp"
 
+Manager g_Manager;
 int main(int argc, char* argv[]){
-    Manager m;
-    m.Init();
-    while (!m.IsShutdown()) {
-        m.Update();
+    g_Manager.Init();
+    while (!g_Manager.IsShutdown()) {
+        g_Manager.Update();
     };
     return 0;
 };
