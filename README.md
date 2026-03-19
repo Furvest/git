@@ -13,6 +13,7 @@ A game, was created a best developers (developers opinion) a "ПМИ24" group. P
 - Казак Алексей (Ryochi1)
 
 ### CTO 
+- Шкаберин Егор (im-tem, он же shkaberined)
 - Олькевич Андрей (Furvest)
 
 ### Head of QA
