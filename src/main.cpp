@@ -9,7 +9,7 @@
 #include "game/game.hpp"
 
 Manager g_Manager;
-int main(int argc, char* argv[]){
+int     main(int argc, char* argv[]) {
     g_Manager.Init();
     while (!g_Manager.IsShutdown()) {
         g_Manager.Update();
