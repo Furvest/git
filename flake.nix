@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "Игра, созданная лучшими разработчиками (по мнению разработчиков) группы ПМИ24";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -9,49 +9,50 @@
     { self, nixpkgs }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = nixpkgs.legacyPackages.${system};
       dependencies = with pkgs; [
+        # normal dependencies
         cmake
-        libgl
         libxkbcommon
         pipewire
         sdl3
+        tinyxml
         vulkan-headers
         vulkan-loader
         wayland
 
-        xorg.libX11
-        xorg.libxcb
-        xorg.libXScrnSaver
-        xorg.libXcursor
-        xorg.libXext
-        xorg.libXfixes
-        xorg.libXi
-        xorg.libXrandr
+        # TODO: get rid of autism and switch to wl/pipewire/libinput
+        # autism
+        libX11
+        libxcb
+        libXScrnSaver
+        libXcursor
+        libxext
+        libXtst
+        libXfixes
+        libXi
+        libXrandr
       ];
     in
     {
       devShell = pkgs.mkShell {
         buildInputs = dependencies;
-        PKG_CONFIG_PATH = "${pkgs.SDL3.dev}/lib/pkgconfig";
       };
 
-      packages.default = pkgs.stdenv.mkDerivation {
+      packages.${system}.default = pkgs.stdenv.mkDerivation {
         pname = "SDLGame";
         version = "0.1.0";
 
-        src = ./.; # assumes source files are in the flake root
+        src = ./.;
         cmakeFlags = [
           "-DCMAKE_BUILD_TYPE=Release"
-          "-DSDL3_DIR=${pkgs.SDL3}/lib/cmake/SDL3"
         ];
 
+        buildInputs = dependencies;
         buildPhase = ''
           cmake -S . -B build
           cmake --build build
         '';
-
-        buildInputs = dependencies;
       };
     };
 }
