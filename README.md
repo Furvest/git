@@ -26,12 +26,15 @@
 # Предметы:
 ## Чётки Аида
 ~ +5 урона
+<img width="217" height="213" alt="image" src="https://github.com/user-attachments/assets/9376123d-b11e-4068-8622-3ebcfb624c0e" />
 ## Дудка Перуна
 ~ +10 урона
+<img width="266" height="206" alt="image" src="https://github.com/user-attachments/assets/0e39305a-4bd9-46b8-bf5c-b456f001f89a" />
 ## Лапти Таноса
 ~ +10 хп
 ## Калоши Ориона
 ~ +30 хп
+<img width="238" height="215" alt="image" src="https://github.com/user-attachments/assets/104e8f32-d7ed-4795-98db-1229dcc5fde8" />
 ## Водник Посейдона
 ~ +5 урон, 5 хп 
 <img width="190" height="199" alt="image" src="https://github.com/user-attachments/assets/b84eb531-1686-48d9-856c-330337fdd2fc" />
