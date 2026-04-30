@@ -32,6 +32,7 @@
 <img width="266" height="206" alt="image" src="https://github.com/user-attachments/assets/0e39305a-4bd9-46b8-bf5c-b456f001f89a" />
 ## Лапти Таноса
 ~ +10 хп
+<img width="332" height="260" alt="image" src="https://github.com/user-attachments/assets/3e7bf122-ee67-4629-9933-87cb93bc7e27" />
 ## Калоши Ориона
 ~ +30 хп
 <img width="238" height="215" alt="image" src="https://github.com/user-attachments/assets/104e8f32-d7ed-4795-98db-1229dcc5fde8" />
@@ -42,6 +43,8 @@
 ~ +40 урона, -50 хп
 ## Учебник по риторике
 ~ +8 к диапазону "случайного удобрения"
+<img width="183" height="193" alt="image" src="https://github.com/user-attachments/assets/89d63c0b-5c24-4622-a16e-84138e02d3b5" />
+
 
 
 ## Метод нанесения урона
