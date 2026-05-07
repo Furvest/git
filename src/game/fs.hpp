@@ -1,15 +1,7 @@
 #pragma once
 #include <string>
-namespace Engine{
-	namespace IO {
-		namespace Filesystem {
-			//class IFile {
-
-			//};
-			//class IDirectory {
-			//public:
-			//	virtual void OpenFile(std::string rel_path) = 0;
-			//};
-		};
-	};
+#include <SDL3/SDL.h>
+class FSManager {
+public:
+	static std::string GetAssetPath() { return std::string(SDL_GetBasePath())+"assets/"; };
 };
