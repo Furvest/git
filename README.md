@@ -41,6 +41,7 @@
 <img width="190" height="199" alt="image" src="https://github.com/user-attachments/assets/b84eb531-1686-48d9-856c-330337fdd2fc" />
 ## Хрустальный клинок
 ~ +40 урона, -50 хп
+<img width="1200" height="1200" alt="6293d157bf129cfaf8f199f24503b510" src="https://github.com/user-attachments/assets/311ffb63-2ed8-4154-9897-39a00fc94a29" />
 ## Учебник по риторике
 ~ +8 к диапазону "случайного удобрения"
 <img width="183" height="193" alt="image" src="https://github.com/user-attachments/assets/89d63c0b-5c24-4622-a16e-84138e02d3b5" />
