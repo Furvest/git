@@ -102,7 +102,6 @@ namespace ANM2 {
 		};
 		if (!animdata) { return; };
 		delta = delta/data.information.time;
-		printf("scaled delta is %f\n",delta);
 		state.cur_frame_accumulator += delta;
 		while (state.cur_frame_accumulator >= 1.0f) {
 			state.cur_frame += 1;
