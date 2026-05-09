@@ -56,35 +56,42 @@ namespace ANM2 {
 			};
 		};
 		if (!animdata) { return; };
-
 		for (LayerAnimationData layer : animdata->layer_anims) {
 			if (layer.frames.size() == 0) { continue; };
+			if (layer.visible == false) { continue; };
 			auto& sheet_id = data.layers[layer.layer_id].sheet_id;
-			int frame_id = 0;
-			int elapsed = 0;
-			for (size_t i = 0; i < layer.frames.size(); ++i)
+
+			int frame_id = (layer.frames.size() - 1);
+			int frame_begin_time = 0;
+			for (int i = 0; i < (int)layer.frames.size(); ++i)
 			{
-				if (state.cur_frame < elapsed+layer.frames[i].Delay)
+				if (state.cur_frame < frame_begin_time+(int)layer.frames[i].Delay)
 				{
 					frame_id = i;
 					break;
 				}
-				elapsed += layer.frames[i].Delay;
+				frame_begin_time += layer.frames[i].Delay;
 			};
 			auto& frame_data = layer.frames[frame_id];
-			int next_frame_id = std::min((size_t)frame_id+1, layer.frames.size() - 1);
+			int next_frame_id = (int)std::min((size_t)frame_id+1, layer.frames.size() - 1);
+
+
 			auto& next_frame_data = layer.frames[next_frame_id];
 			if (!layer.frames[frame_id].Interpolated) {
 				next_frame_data = frame_data;
 			};
-			double new_ratio = (state.cur_frame-elapsed) / (double)frame_data.Delay;
+			if (frame_data.Visible == false) { continue; };
+			double new_ratio = (double)(state.cur_frame-frame_begin_time + (double)state.cur_frame_accumulator) / (double)frame_data.Delay;
 			double old_ratio = 1.0 - new_ratio;
+			
+			ColorDesc col{ .R = frame_data.r*old_ratio + next_frame_data.r*new_ratio, .A=frame_data.alpha*old_ratio + next_frame_data.alpha*new_ratio };
+
 			g_Renderer.Render(textures[sheet_id].tex, pos + Vector(frame_data.XPosition*old_ratio + next_frame_data.XPosition*new_ratio - frame_data.XPivot,
 				frame_data.YPosition*old_ratio + next_frame_data.YPosition*new_ratio - frame_data.YPivot),
-				Quad(frame_data.XCrop, frame_data.YCrop, frame_data.Width, frame_data.Height), Vector(frame_data.XPivot, frame_data.YPivot), Vector(frame_data.XScale*old_ratio + next_frame_data.XScale*new_ratio, frame_data.YScale * old_ratio + next_frame_data.YScale * new_ratio), LerpAngleDegrees(frame_data.Rotation,next_frame_data.Rotation,new_ratio));
+				Quad(frame_data.XCrop, frame_data.YCrop, frame_data.Width, frame_data.Height), Vector(frame_data.XPivot, frame_data.YPivot), Vector(frame_data.XScale*old_ratio + next_frame_data.XScale*new_ratio, frame_data.YScale * old_ratio + next_frame_data.YScale * new_ratio), LerpAngleDegrees(frame_data.Rotation,next_frame_data.Rotation,new_ratio),col);
 		};
 	}
-	void Sprite::Update()
+	void Sprite::Update(float delta)
 	{
 		AnimationData* animdata = nullptr;
 		for (AnimationData& anim : data.anims) {
@@ -94,8 +101,19 @@ namespace ANM2 {
 			};
 		};
 		if (!animdata) { return; };
-		state.cur_frame += 1;
-		state.cur_frame %= animdata->framenum;
+		delta = delta/data.information.time;
+		printf("scaled delta is %f\n",delta);
+		state.cur_frame_accumulator += delta;
+		while (state.cur_frame_accumulator >= 1.0f) {
+			state.cur_frame += 1;
+			state.cur_frame_accumulator -= 1.0f;
+		};
+		if (animdata->loop) {
+			state.cur_frame %= animdata->framenum;
+		}
+		else {
+			state.cur_frame = std::min((int)animdata->framenum - 1, state.cur_frame);
+		};
 	}
 	;
 };

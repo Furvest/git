@@ -53,6 +53,11 @@ namespace ANM2 {
 		std::vector<Trigger> triggers;
 	};
 
+	struct AnimationInfo {
+		float fps = 30.0f;
+		float time = 1.0f / 30.0f;
+	};
+
 	class ANM2Data {
 	public:
 		ANM2Data() {};
@@ -64,6 +69,7 @@ namespace ANM2 {
 		std::vector<NullData> nulls;
 		std::vector<EventData> events;
 		std::vector<AnimationData> anims;
+		AnimationInfo information;
 		std::string default_anim;
 	};
 };

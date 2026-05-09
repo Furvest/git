@@ -9,25 +9,31 @@
 
 void Game::Init() {
     printf("initting game\n");
-    test_tex.path = std::string(SDL_GetBasePath())+"assets/test_texture.png";
-    test_tex.texture = g_TexManager.GetTexture(test_tex.path);
-    test_spr.Load(FSManager::GetAssetPath() + "slop.anm2");
-    test_spr.state.anim_name = "Shocked";
-};
+    test_spr.Load(R"(C:\SteamLibrary\steamapps\common\The Binding of Isaac Rebirth\extracted_resources\resources\gfx\cutscenes\intro.anm2)");
+//    test_spr.Load(FSManager::GetAssetPath() + "slop.anm2");
+//    test_spr.state.anim_name = "Shocked";
+//    test_spr.state.cur_frame = 3500;
+}
+void Game::Update()
+{};
 
 void Game::Render() {
+    uint64_t ticks = SDL_GetTicks();
+    float delta = (float)(ticks - prev_ticks) / 1000.0f;
+    int w, h;
     SDL_SetRenderDrawColor(g_Manager.r, 64, 64, 64, 255);
     SDL_RenderClear(g_Manager.r);
-//    SDL_FRect src = SDL_FRect{ 0,0,512,512 };
-//    counter += 1;
-//   src.x = 50.0f*sin(0.001f*(float)counter);
-//    g_Renderer.Render(test_tex.texture, Vector(src.x, src.y), Quad(0, 0, 256, 512), Vector(0, 0), Vector(1, 1), src.x);
-    test_spr.Render(Vector(500, 500));
-    if (counter % 4 == 0) {
-        test_spr.Update();
-    };
+    g_Renderer.globalScale = 4.0f;
+    SDL_GetRenderOutputSize(g_Manager.r, &w, &h);
+    test_spr.Render(Vector((double)w / (2.0 * g_Renderer.globalScale), (double)h / (2.0 * g_Renderer.globalScale)));
+    test_spr.Update(delta);
     counter++;
+    SDL_RenderDebugText(g_Manager.r, 250, 250, "hi!");
+    prev_ticks = SDL_GetTicks();
 };
+
+void Game::ProcessClick(Vector click_pos)
+{};
 
 void Game::Deinit() {
     g_TexManager.FreeTexture(test_tex.path);

@@ -20,6 +20,6 @@ namespace ANM2 {
 		void Load(const std::filesystem::path& p);
 		~Sprite();
 		void Render(Vector pos);
-		void Update();
+		void Update(float delta);
 	};
 }

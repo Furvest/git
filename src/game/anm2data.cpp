@@ -38,6 +38,11 @@ namespace ANM2 {
 		};
 		tinyxml2::XMLHandle doc_handle(&d);
 		auto root = doc_handle.FirstChildElement("AnimatedActor");
+		auto info = root.FirstChildElement("Info");
+		{
+			information.fps=info.ToElement()->FloatAttribute("Fps");
+			information.time = 1.0f / information.fps;
+		}
 		auto content = root.FirstChildElement("Content");
 
 		{

@@ -4,7 +4,7 @@ void Manager::Init() {
     char* game_dir_cstr = SDL_GetCurrentDirectory();
     game_dir = game_dir_cstr;
     SDL_free(game_dir_cstr);
-    w = SDL_CreateWindow("hi!", 1280, 800, 0);
+    w = SDL_CreateWindow("hi!", 1280, 800, SDL_WINDOW_RESIZABLE);
     r = SDL_CreateRenderer(w, nullptr);
     SDL_SetRenderVSync(r, 1);
     g_Renderer.Init(r);
