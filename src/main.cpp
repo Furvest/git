@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "game/game.hpp"
 #include "game/manager.hpp"
 
 Manager g_Manager;
