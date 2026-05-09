@@ -11,13 +11,16 @@ project ("SDLGame")
 file(GLOB_RECURSE GAME_SRC "src/*.cpp" "src/*.hpp")
 
 add_subdirectory(deps/SDL EXCLUDE_FROM_ALL)
+add_subdirectory(deps/SDL_ttf EXCLUDE_FROM_ALL)
 add_subdirectory(deps/tinyxml2)
 
 add_executable (SDLGame ${GAME_SRC})
 
-target_link_libraries(SDLGame PRIVATE SDL3::SDL3 tinyxml2::tinyxml2)
+target_link_libraries(SDLGame PRIVATE SDL3::SDL3 tinyxml2::tinyxml2 SDL3_ttf::SDL3_ttf)
 if (WIN32)
 add_custom_command(TARGET SDLGame POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
+add_custom_command(TARGET SDLGame POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_ttf::SDL3_ttf-shared> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
+add_custom_command(TARGET SDLGame POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:tinyxml2::tinyxml2> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
 endif()
 
 add_custom_command(TARGET SDLGame POST_BUILD
