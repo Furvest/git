@@ -1,5 +1,18 @@
 #include "scenemanager.hpp"
 
+bool SceneManager::RemoveQueued()
+{
+	for (auto it = SceneList.begin(); it != SceneList.end(); ) {
+		if ((*it)->queueForRemoval) {
+			it=SceneList.erase(it);
+		}
+		else {
+			++it;
+		}
+	};
+	return SceneList.size()==0;
+}
+
 bool SceneManager::Update(float delta)
 {
 	for (auto& s : SceneList) {

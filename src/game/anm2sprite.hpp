@@ -18,7 +18,10 @@ namespace ANM2 {
 		Sprite() = default;
 		Sprite(const std::filesystem::path& p);
 		void Load(const std::filesystem::path& p);
+		Vector GetNullLayerPos(const std::string& layer_name, Vector render_offset);
+		bool IsPosInNullRect(const std::string& layer_name, Vector pos, Vector render_offset);
 		~Sprite();
+		bool Play(const std::string& name, bool force);
 		void Render(Vector pos);
 		void Update(float delta);
 	};

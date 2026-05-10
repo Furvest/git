@@ -20,7 +20,7 @@ bool TestScene::Update(float delta)
 
 bool TestScene::Render(float delta)
 {
-	Vector screen_size = g_Renderer.GetScreenSize();		//обычно будет 1280x720
+	Vector screen_size = g_Renderer.GetScreenSize();		//обычно будет 1920x1080
     test_spr.Render(Vector(screen_size.x/2.0f, screen_size.y / 2.0f + 40.0f));
     g_Renderer.RenderFont("hello!", Vector(screen_size.x-200, screen_size.y-100));
 	return false;

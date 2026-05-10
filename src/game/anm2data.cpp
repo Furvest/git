@@ -128,6 +128,22 @@ namespace ANM2 {
 					};
 				};
 
+				{
+					auto layeranim = anim.FirstChildElement("NullAnimations").FirstChildElement("NullAnimation");
+					while (layeranim.ToElement()) {
+						LayerAnimationData lad;
+						lad.layer_id = layeranim.ToElement()->IntAttribute("NullId");
+						lad.visible = layeranim.ToElement()->BoolAttribute("Visible");
+						auto frame = layeranim.FirstChildElement("Frame");
+						while (frame.ToElement()) {
+							lad.frames.push_back(_parse_frame(frame));
+							frame = frame.NextSiblingElement();
+						};
+						adata.null_anims.push_back(lad);
+						layeranim = layeranim.NextSiblingElement();
+					};
+				};
+
 				anims.push_back(adata);
 				anim = anim.NextSiblingElement();
 			};

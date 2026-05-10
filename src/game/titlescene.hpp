@@ -1,9 +1,13 @@
 #include "scene.hpp"
 #include "anm2sprite.hpp"
-class TestScene2 : public Scene {
+#include "manager.hpp"
+class TitleScene : public Scene {
+	ANM2::Sprite title;
+	ANM2::Sprite begin_button;
+	ANM2::Sprite quit_button;
 public:
-	TestScene2();
-	~TestScene2();
+	TitleScene();
+	~TitleScene();
 	bool Update(float delta) override;
 	bool Render(float delta) override;
 	bool HandleEvent(SDL_Event* e) override;
