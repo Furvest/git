@@ -4,6 +4,7 @@
 #include "anm2sprite.hpp"
 #include "fs.hpp"
 
+
 TitleScene::TitleScene() {
 	title.Load(FSManager::GetAssetPath() + "title.anm2");
 	begin_button.Load(FSManager::GetAssetPath() + "title_begin.anm2");

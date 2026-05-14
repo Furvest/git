@@ -15,7 +15,7 @@ void Manager::Init() {
     SDL_ShowWindow(w);
     SDL_SetRenderLogicalPresentation(r, 1920, 1080, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
-    sceneManager.SceneList.push_back(std::make_unique<TitleScene>());
+    sceneManager.SceneList.push_back(std::make_unique<TestScene>());
 }
 void Manager::Render() {
     sceneManager.Render(delta);
@@ -35,8 +35,8 @@ void Manager::Update() {
 
         SDL_ConvertEventToRenderCoordinates(r, &event_holder);
         SDL_GetEventDescription(&event_holder, event_desc_buf, sizeof(event_desc_buf));
-        printf("event info: ");
-        printf("%s\n",event_desc_buf);
+//        printf("event info: ");
+//        printf("%s\n",event_desc_buf);
 
         if(event_holder.type== SDL_EVENT_QUIT ||
            event_holder.type == SDL_EVENT_KEY_DOWN && event_holder.key.key == SDLK_ESCAPE) {
