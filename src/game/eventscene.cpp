@@ -1,4 +1,4 @@
-#include "EventScene.hpp"
+#include "eventscene.hpp"
 #include "rendermanager.hpp"
 
 #include "anm2sprite.hpp"

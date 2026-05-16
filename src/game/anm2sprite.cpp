@@ -28,12 +28,12 @@ namespace ANM2 {
 	void Sprite::Load(const std::filesystem::path& p) {
 		data.Init(p);
 		state.anim_name = data.default_anim;
-		printf("hi!\n");
+		SDL_Log("hi!\n");
 		for (SpritesheetData& sheet : data.spritesheets) {
 			textures[sheet.id].path = sheet.path;
 			std::filesystem::path load_path = p;
 			auto dir = load_path.parent_path();
-			printf("getting tex %s\n", (dir / sheet.path).string().c_str());
+			SDL_Log("getting tex %s\n", (dir / sheet.path).string().c_str());
 			textures[sheet.id].tex = g_TexManager.GetTexture((dir / sheet.path).string());
 		};
 	}

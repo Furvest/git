@@ -3,10 +3,12 @@
 
 #include "anm2sprite.hpp"
 #include "fs.hpp"
-#include "EventScene.hpp"
+#include "eventscene.hpp"
 
 
 TitleScene::TitleScene() {
+	SDL_Log("We are in titlescene\n");
+	SDL_Log("Path to load is %s\n", (FSManager::GetAssetPath() + "title.anm2").c_str());
 	title.Load(FSManager::GetAssetPath() + "title.anm2");
 	begin_button.Load(FSManager::GetAssetPath() + "title_begin.anm2");
 	quit_button.Load(FSManager::GetAssetPath() + "title_quit.anm2");

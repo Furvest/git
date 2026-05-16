@@ -24,7 +24,7 @@ bool SceneManager::UpdateQueue()
 		it = ScenesToAdd.erase(it);
 	};
 	if (orderChanged){	//todo: если захочется на ходу менять порядок отрисовки сцен то надо обновлять эту переменную либо убрать её
-		std::stable_sort(SceneList.begin(), SceneList.end(), [](const auto& a, const auto& b) { return a->sortPriority < b->sortPriority; });
+		SceneList.sort([](const auto& a, const auto& b) { return a->sortPriority < b->sortPriority; });
 		orderChanged = false;
 	};
 	if (SceneList.size() != 0) {

@@ -1,5 +1,6 @@
 #include "anm2data.hpp"
 #include "tinyxml2.h"
+#include <SDL3/SDL.h>
 
 namespace ANM2 {
 	FrameData _parse_frame(tinyxml2::XMLHandle& h) {
@@ -31,9 +32,26 @@ namespace ANM2 {
 
 	void ANM2Data::Init(const std::filesystem::path& p)
 	{
+		SDL_IOStream* io=SDL_IOFromFile(p.string().c_str(), "rb");
+		if (!io) return;
+		size_t size = 0;
+
+		SDL_SeekIO(io, 0, SDL_IO_SEEK_END);   // go to end
+		size = SDL_TellIO(io);                // get position = file size
+		SDL_SeekIO(io, 0, SDL_IO_SEEK_SET);   // go back to start
+
+		std::string file_contents;
+		file_contents.resize(size);
+
+		SDL_ReadIO(io, file_contents.data(), size);
+
+		SDL_CloseIO(io);
+		
 		tinyxml2::XMLDocument d;
-		auto err = d.LoadFile(p.string().c_str());
+//		auto err = d.LoadFile(p.string().c_str());
+		auto err = d.Parse(file_contents.c_str());
 		if (err) {
+			SDL_Log("xml fail!\n");
 			return;		//xml parse fail
 		};
 		tinyxml2::XMLHandle doc_handle(&d);

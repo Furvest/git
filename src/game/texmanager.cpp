@@ -12,7 +12,9 @@ SDL_Texture* TextureManager::GetTexture(const std::string& path) {
             return tex.texture;
         };
     };
-    SDL_Surface* s = SDL_LoadPNG(path.c_str());
+    SDL_IOStream* io = SDL_IOFromFile(path.c_str(), "rb");
+//    SDL_Surface* s = SDL_LoadPNG(path.c_str());
+    SDL_Surface* s = SDL_LoadPNG_IO(io, true);
     if (!s) { printf("failed to load png!\n");  return nullptr; };
     SDL_Texture* t = SDL_CreateTextureFromSurface(r, s);
     printf("%s\n", SDL_GetError());

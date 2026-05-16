@@ -5,10 +5,17 @@
 void Manager::Init() {
     SDL_Init(SDL_INIT_VIDEO);
     char* game_dir_cstr = SDL_GetCurrentDirectory();
+    SDL_Log("Game dir is %s\n", game_dir_cstr);
     game_dir = game_dir_cstr;
     SDL_free(game_dir_cstr);
-    w = SDL_CreateWindow("hi!", 1280, 720, SDL_WINDOW_RESIZABLE);
+    SDL_SetHint(SDL_HINT_ORIENTATIONS, "LandscapeLeft LandscapeRight");
+    size_t window_flags = SDL_WINDOW_RESIZABLE;
+#ifdef ANDROID
+    window_flags |= SDL_WINDOW_FULLSCREEN;
+#endif
+    w = SDL_CreateWindow("hi!", 1280, 720, window_flags);
     r = SDL_CreateRenderer(w, nullptr);
+    SDL_Log("SDL Error is %s\n",SDL_GetError());
     SDL_SetRenderVSync(r, 1);
     g_Renderer.Init(r);
     g_TexManager.Init(r);
@@ -17,6 +24,7 @@ void Manager::Init() {
 
 //    sceneManager.SceneList.push_back(std::make_unique<EventScene>());
     sceneManager.QueueScene(std::move(std::make_unique<TitleScene>()));
+    SDL_Log("init done\n");
 }
 void Manager::Render() {
     sceneManager.Render(delta);
@@ -36,8 +44,8 @@ void Manager::Update() {
 
         SDL_ConvertEventToRenderCoordinates(r, &event_holder);
         SDL_GetEventDescription(&event_holder, event_desc_buf, sizeof(event_desc_buf));
-//        printf("event info: ");
-//        printf("%s\n",event_desc_buf);
+//        SDL_Log("event info: ");
+//        SDL_Log("%s\n",event_desc_buf);
 
         if(event_holder.type== SDL_EVENT_QUIT ||
            event_holder.type == SDL_EVENT_KEY_DOWN && event_holder.key.key == SDLK_ESCAPE) {

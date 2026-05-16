@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include <sstream>
 
 EventOpType EventHolder::DecodeEventOpcode(const std::string& op)
 {
@@ -31,7 +32,7 @@ void EventHolder::HandleEventOp(EventOp& op)
 		actor.id = op.args[0];
 		actor.name = op.args[1];
 		actor.spr.Load(filePath.parent_path() / op.args[2]);
-		printf("adding actor %s with name %s and sprite path %s\n",op.args[0].c_str(), op.args[1].c_str(), (filePath.parent_path() / op.args[2]).string().c_str());
+		SDL_Log("adding actor %s with name %s and sprite path %s\n",op.args[0].c_str(), op.args[1].c_str(), (filePath.parent_path() / op.args[2]).string().c_str());
 		actors.push_back(actor);
 	};
 
@@ -94,7 +95,22 @@ void EventHolder::AdvanceEvent(float delta)
 
 void EventHolder::ParseScene(const std::filesystem::path& p)
 {
-	std::ifstream input(p);
+//	std::ifstream input(p);
+	SDL_IOStream* io = SDL_IOFromFile(p.string().c_str(), "rb");
+	if (!io) return;
+	size_t size = 0;
+
+	SDL_SeekIO(io, 0, SDL_IO_SEEK_END);   // go to end
+	size = SDL_TellIO(io);                // get position = file size
+	SDL_SeekIO(io, 0, SDL_IO_SEEK_SET);   // go back to start
+
+	std::string file_contents;
+	file_contents.resize(size);
+
+	SDL_ReadIO(io, file_contents.data(), size);
+
+	SDL_CloseIO(io);
+	std::stringstream input(file_contents);
 	std::string buffer;
 	std::getline(input, buffer);	
 	std::string field;
@@ -118,7 +134,7 @@ void EventHolder::ParseScene(const std::filesystem::path& p)
 			op.args.resize(std::max((size_t)5,op.args.size()));
 		};
 		event_ops.push_back(op);
-		printf("parsing event operator\n");
+		SDL_Log("parsing event operator\n");
 	};
 	return;
 }
