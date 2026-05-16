@@ -1,0 +1,9 @@
+tags	operation	arg0	arg1	arg2	arg3	arg4
+	define_actor	event_bg	Event BG	event_bg.anm2		
+	define_actor	actor1	Actor 1	actor1.anm2		
+	say_line	actor1	Hello world!			
+	play_anim	actor1	Relaxed			
+	wait	3.5	
+	play_anim	actor1	Default
+	say_line	actor1	мгм, три с половиной секунды сна - то, что нужно
+	event_end			

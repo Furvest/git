@@ -1,3 +1,0 @@
-tags	operation	arg1	arg2	arg3	arg4	arg5
-	define_actor	actor1	Actor 1	actor1.anm2		
-	say_line	actor1	hello, world!			
