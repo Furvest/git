@@ -3,6 +3,7 @@
 
 #include "anm2sprite.hpp"
 #include "fs.hpp"
+#include "EventScene.hpp"
 
 
 TitleScene::TitleScene() {
@@ -15,6 +16,9 @@ TitleScene::~TitleScene() {};
 
 bool TitleScene::Update(float delta)
 {
+	if (!IsFocused()) {
+		return false;
+	};
 	title.Update(delta);
 	begin_button.Update(delta);
 	quit_button.Update(delta);
@@ -23,15 +27,20 @@ bool TitleScene::Update(float delta)
 
 bool TitleScene::Render(float delta)
 {
+	if (!IsFocused()) {
+		return false;
+	};
 	title.Render(Vector(0, 0));
 	begin_button.Render(title.GetNullLayerPos("Begin",Vector(0,0)));
 	quit_button.Render(title.GetNullLayerPos("Quit", Vector(0, 0)));
-//	g_Renderer.RenderFont("test scene 2 говорит привет!", Vector(200, 100));
 	return false;
 }
 
 bool TitleScene::HandleEvent(SDL_Event* e)
 {
+	if (!IsFocused()) {
+		return false;
+	};
 	if (e->type == SDL_EVENT_MOUSE_MOTION) {
 		Vector pos = Vector(e->motion.x, e->motion.y);
 		bool is_begin_hover = begin_button.IsPosInNullRect("ButtonRect", pos, title.GetNullLayerPos("Begin", Vector(0, 0)));
@@ -58,6 +67,12 @@ bool TitleScene::HandleEvent(SDL_Event* e)
 		bool is_quit_hover = quit_button.IsPosInNullRect("ButtonRect", pos, title.GetNullLayerPos("Quit", Vector(0, 0)));
 		if (is_quit_hover) {
 			queueForRemoval = true;
+		};
+
+		bool is_begin_hover = quit_button.IsPosInNullRect("ButtonRect", pos, title.GetNullLayerPos("Begin", Vector(0, 0)));
+		if (is_begin_hover) {
+			g_Manager.sceneManager.QueueScene(std::move(std::make_unique<EventScene>(FSManager::GetAssetFSPath() / "event/event1.tsv")));
+			Unfocus();
 		};
 	};
 	return false;
