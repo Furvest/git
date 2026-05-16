@@ -1,5 +1,5 @@
 #include "manager.hpp"
-#include "testscene.hpp"
+#include "eventscene.hpp"
 #include "titlescene.hpp"
 #include <memory>
 void Manager::Init() {
@@ -15,14 +15,15 @@ void Manager::Init() {
     SDL_ShowWindow(w);
     SDL_SetRenderLogicalPresentation(r, 1920, 1080, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
-    sceneManager.SceneList.push_back(std::make_unique<TestScene>());
+//    sceneManager.SceneList.push_back(std::make_unique<EventScene>());
+    sceneManager.QueueScene(std::move(std::make_unique<TitleScene>()));
 }
 void Manager::Render() {
     sceneManager.Render(delta);
     SDL_RenderPresent(r);
 };
 void Manager::Update() {
-    bool no_scenes_left=sceneManager.RemoveQueued();
+    bool no_scenes_left=sceneManager.UpdateQueue();
     uint64_t ticks = SDL_GetTicks();
     delta = (float)(ticks - prev_ticks) / 1000.0f;
     
