@@ -1,14 +1,35 @@
 #include "scenemanager.hpp"
+#include <algorithm>
+#include <execution>
 
-bool SceneManager::RemoveQueued()
+void SceneManager::QueueScene(std::unique_ptr<Scene> s)
+{
+	ScenesToAdd.push_back(std::move(s));
+	orderChanged = true;
+}
+
+bool SceneManager::UpdateQueue()
 {
 	for (auto it = SceneList.begin(); it != SceneList.end(); ) {
 		if ((*it)->queueForRemoval) {
 			it=SceneList.erase(it);
+			orderChanged = true;
 		}
 		else {
 			++it;
 		}
+	};
+	for (auto it = ScenesToAdd.begin(); it != ScenesToAdd.end(); ) {
+		SceneList.push_back(std::move(*it));
+		it = ScenesToAdd.erase(it);
+	};
+	if (orderChanged){	//todo: если захочется на ходу менять порядок отрисовки сцен то надо обновлять эту переменную либо убрать её
+		std::stable_sort(SceneList.begin(), SceneList.end(), [](const auto& a, const auto& b) { return a->sortPriority < b->sortPriority; });
+		orderChanged = false;
+	};
+	if (SceneList.size() != 0) {
+		auto& end_scene=*(SceneList.back());
+		end_scene.Focus();
 	};
 	return SceneList.size()==0;
 }
