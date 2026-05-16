@@ -8,7 +8,7 @@ endif()
 
 project ("SDLGame")
 
-file(GLOB_RECURSE GAME_SRC "src/*.cpp" "src/*.hpp")
+file(GLOB_RECURSE GAME_SRC CONFIGURE_DEPENDS "src/*.cpp" "src/*.hpp")
 
 add_subdirectory(deps/SDL EXCLUDE_FROM_ALL)
 add_subdirectory(deps/SDL_ttf EXCLUDE_FROM_ALL)
