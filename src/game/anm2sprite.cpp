@@ -26,17 +26,40 @@ inline float LerpAngleDegrees(float a, float b, float t)
 
 namespace ANM2 {
 	void Sprite::Load(const std::filesystem::path& p) {
+		SDL_Log("[ANM2] Sprite %s is being loaded!\n", p.string().c_str());
+		if (path != "") {
+			for (SheetRenderDesc& sheet : textures) {
+				if (sheet.tex) {
+					g_TexManager.FreeTexture(sheet.path);
+				};
+			};
+		};
+		path = p.string();
 		data.Init(p);
 		state.anim_name = data.default_anim;
-		SDL_Log("hi!\n");
 		for (SpritesheetData& sheet : data.spritesheets) {
 			textures[sheet.id].path = sheet.path;
 			std::filesystem::path load_path = p;
 			auto dir = load_path.parent_path();
-			SDL_Log("getting tex %s\n", (dir / sheet.path).string().c_str());
-			textures[sheet.id].tex = g_TexManager.GetTexture((dir / sheet.path).string());
+			SDL_Log("[ANM2] Getting texture %s\n", (dir / sheet.path).string().c_str());
+			textures[sheet.id].path = (dir / sheet.path).string();
+			textures[sheet.id].tex = g_TexManager.GetTexture(textures[sheet.id].path);
 		};
 	}
+
+	Sprite::Sprite(const Sprite& other) {
+		data = other.data;
+		path = other.path;
+		state = other.state;
+		for (SpritesheetData& sheet : data.spritesheets) {
+			textures[sheet.id].path = sheet.path;
+			auto dir = std::filesystem::path(path).parent_path();
+			SDL_Log("[ANM2] Getting texture %s\n", (dir / sheet.path).string().c_str());
+			textures[sheet.id].path = (dir / sheet.path).string();
+			textures[sheet.id].tex = g_TexManager.GetTexture(textures[sheet.id].path);
+		};
+	};
+
 	Vector Sprite::GetNullLayerPos(const std::string& layer_name, Vector render_offset)
 	{
 		Vector out(0.0f, 0.0f);
@@ -133,6 +156,7 @@ namespace ANM2 {
 		Load(p);
 	};
 	Sprite::~Sprite() {
+		SDL_Log("[ANM2] Sprite %s is destroyed!\n",path.c_str());
 		for (SheetRenderDesc sheet : textures) {
 			if (sheet.tex) {
 				g_TexManager.FreeTexture(sheet.path);
