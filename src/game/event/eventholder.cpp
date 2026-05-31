@@ -3,6 +3,7 @@
 #include <string>
 #include <algorithm>
 #include <sstream>
+#include <charconv>
 
 EventOpType EventHolder::DecodeEventOpcode(const std::string& op)
 {
@@ -28,12 +29,12 @@ std::string _DequoteString(std::string& in) {
 void EventHolder::HandleEventOp(EventOp& op)
 {
 	if (op.opc == EventOpType::DEFINE_ACTOR) {
+		SDL_Log("adding actor %s with name %s and sprite path %s\n",op.args[0].c_str(), op.args[1].c_str(), (filePath.parent_path() / op.args[2]).string().c_str());
 		EventActor actor;
 		actor.id = op.args[0];
 		actor.name = op.args[1];
 		actor.spr.Load(filePath.parent_path() / op.args[2]);
-		SDL_Log("adding actor %s with name %s and sprite path %s\n",op.args[0].c_str(), op.args[1].c_str(), (filePath.parent_path() / op.args[2]).string().c_str());
-		actors.push_back(actor);
+		actors.emplace_back(std::move(actor));
 	};
 
 	if (op.opc == EventOpType::SAY_LINE) {
@@ -64,7 +65,7 @@ void EventHolder::HandleEventOp(EventOp& op)
 
 	if (op.opc == EventOpType::WAIT) {
 		EventTimer t;
-		t.maxTime=std::stof(op.args[0]);
+		std::from_chars(op.args[0].data(), op.args[0].data()+op.args[0].size(), t.maxTime, std::chars_format::general);
 		event_blocking_timers.push_back(t);
 	};
 
@@ -96,7 +97,7 @@ void EventHolder::AdvanceEvent(float delta)
 void EventHolder::ParseScene(const std::filesystem::path& p)
 {
 //	std::ifstream input(p);
-	SDL_IOStream* io = SDL_IOFromFile(p.string().c_str(), "rb");
+	SDL_IOStream* io = SDL_IOFromFile(p.string().c_str(), "r");
 	if (!io) return;
 	size_t size = 0;
 

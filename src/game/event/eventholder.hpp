@@ -39,6 +39,7 @@ struct EventTimer {
 
 class EventHolder {
 public:
+	~EventHolder() { SDL_Log("EventHolder destroyed!\n"); };
 	bool paused = false;
 	EventLine cur_line;
 	bool showNextLine = false;

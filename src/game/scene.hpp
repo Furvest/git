@@ -8,11 +8,11 @@ class Scene {
 public:
 	int sortPriority = 0;
 	bool queueForRemoval = false;
-	virtual ~Scene() = default;
+	virtual ~Scene() { SDL_Log("scene destructor"); };
 	virtual bool Update(float delta) { return true; };
 	virtual bool Render(float delta) { return true; };
 	virtual bool IsFocused() { return isFocused; };
-	virtual bool Focus() { return true; };
-	virtual bool Unfocus() { return true; };
+	virtual bool Focus() { isFocused = true; return true; };
+	virtual bool Unfocus() { isFocused = false; return true; };
 	virtual bool HandleEvent(SDL_Event* e) { return true; };
 };

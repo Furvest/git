@@ -5,7 +5,6 @@
 class EventScene : public Scene {
 public:
 	EventScene(const std::filesystem::path& p);
-	EventScene();
 	~EventScene();
 	bool Update(float delta) override;
 	bool Render(float delta) override;

@@ -1,6 +1,7 @@
 #include "scenemanager.hpp"
 #include <algorithm>
 #include <execution>
+#include "texmanager.hpp"
 
 void SceneManager::QueueScene(std::unique_ptr<Scene> s)
 {
@@ -24,12 +25,13 @@ bool SceneManager::UpdateQueue()
 		it = ScenesToAdd.erase(it);
 	};
 	if (orderChanged){	//todo: если захочется на ходу менять порядок отрисовки сцен то надо обновлять эту переменную либо убрать её
+		g_TexManager.TrimTextures();
 		SceneList.sort([](const auto& a, const auto& b) { return a->sortPriority < b->sortPriority; });
 		orderChanged = false;
-	};
-	if (SceneList.size() != 0) {
-		auto& end_scene=*(SceneList.back());
-		end_scene.Focus();
+		if (SceneList.size() != 0) {
+			auto& end_scene=*(SceneList.back());
+			end_scene.Focus();
+		};
 	};
 	return SceneList.size()==0;
 }

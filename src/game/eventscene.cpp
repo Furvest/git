@@ -6,15 +6,12 @@
 
 #include "event/eventholder.hpp"
 
-EventScene::EventScene() {
-	eh.ParseScene(FSManager::GetAssetPath()+"event/event1.tsv");
-}
-
 EventScene::EventScene(const std::filesystem::path& p) {
 	eh.ParseScene(p);
 }
 
 EventScene::~EventScene(){
+	SDL_Log("Event scene is destroyed\n");
 };
 
 bool EventScene::Update(float delta)
