@@ -416,3 +416,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/android-project/.gradle
+/android-project/.idea
+/android-project/app/build
