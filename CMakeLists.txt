@@ -12,7 +12,10 @@ file(GLOB_RECURSE GAME_SRC CONFIGURE_DEPENDS "src/*.cpp" "src/*.hpp")
 
 add_subdirectory(deps/SDL EXCLUDE_FROM_ALL)
 add_subdirectory(deps/SDL_ttf EXCLUDE_FROM_ALL)
+set(SDLMIXER_GME OFF CACHE BOOL "Support loading GME audio via game-music-emu" FORCE)
+add_subdirectory(deps/SDL_mixer EXCLUDE_FROM_ALL)
 add_subdirectory(deps/tinyxml2)
+
 
 if(ANDROID)
     add_library(main SHARED ${GAME_SRC})
@@ -22,10 +25,11 @@ else()
     set(TARGET_NAME SDLGame)
 endif()
 
-target_link_libraries(${TARGET_NAME} PRIVATE SDL3::SDL3 tinyxml2::tinyxml2 SDL3_ttf::SDL3_ttf)
+target_link_libraries(${TARGET_NAME} PRIVATE SDL3::SDL3 tinyxml2::tinyxml2 SDL3_ttf::SDL3_ttf SDL3_mixer::SDL3_mixer)
 if (WIN32)
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_ttf::SDL3_ttf-shared> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
+add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_mixer::SDL3_mixer-shared> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:tinyxml2::tinyxml2> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
 endif()
 
