@@ -35,7 +35,7 @@ namespace ANM2 {
 		unsigned int Delay;
 
 		bool Visible;
-		bool Interpolated;
+		bool Interpolated;  /*!< Это поле определяет то, будет ли кадр из анимации плавно переходить в следующий */
 	};
 
 	struct Trigger { int event_id = -1; int at = 0; };
