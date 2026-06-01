@@ -46,7 +46,7 @@ void EventHolder::HandleEventOp(EventOp& op)
 		};
 		if (!actor) { return; };
 		cur_line.isShown = false;
-		cur_line.name = actor->name;
+		cur_line.header = actor->name;
 		cur_line.text = op.args[1];
 		showNextLine = true;
 		paused = true;

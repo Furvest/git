@@ -2,6 +2,7 @@
 #include <filesystem>
 #include "../anm2sprite.hpp"
 #include "../common/vector.hpp"
+#include "../dialogueholder.hpp"
 #include <list>
 
 enum EventOpType {
@@ -25,12 +26,6 @@ struct EventActor {
 	Vector pos=Vector(960,540);	//center
 };
 
-struct EventLine {
-	std::string name;
-	std::string text;
-	bool isShown = false;
-};
-
 struct EventTimer {
 	float maxTime=0.0f;
 	float curTime=0.0f;
@@ -41,7 +36,7 @@ class EventHolder {
 public:
 	~EventHolder() { SDL_Log("EventHolder destroyed!\n"); };
 	bool paused = false;
-	EventLine cur_line;
+	DialogueHolder cur_line;
 	bool showNextLine = false;
 	bool loaded = false;
 	std::filesystem::path filePath;

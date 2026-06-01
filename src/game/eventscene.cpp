@@ -6,6 +6,8 @@
 
 #include "event/eventholder.hpp"
 
+#include "dialoguescene.hpp"
+
 EventScene::EventScene(const std::filesystem::path& p) {
 	eh.ParseScene(p);
 }
@@ -19,9 +21,16 @@ bool EventScene::Update(float delta)
 	for (auto& a: eh.actors) {
 		a.spr.Update(delta);
 	};
-	eh.AdvanceEvent(delta);
-	if (eh.showNextLine) {
-
+	if (IsFocused()) {;
+		eh.AdvanceEvent(delta);
+		if (eh.showNextLine) {
+			auto s = std::make_unique<DialogueScene>(&eh.cur_line);
+			s->Focus();
+			g_Manager.sceneManager.QueueScene(std::move(s));
+			Unfocus();
+			eh.showNextLine = false;
+			eh.paused = false;
+		};
 	};
 	if (eh.IsEventDone()) {
 		queueForRemoval = true;
@@ -35,15 +44,16 @@ bool EventScene::Render(float delta)
 	for (auto& a : eh.actors) {
 		a.spr.Render(a.pos);
 	};
-	if (eh.showNextLine) {
-		g_Renderer.RenderFont(eh.cur_line.name,Vector(960,540)+Vector(0,300));
+/*	if (eh.showNextLine) {
+		g_Renderer.RenderFont(eh.cur_line.header,Vector(960,540)+Vector(0,300));
 		g_Renderer.RenderFont(eh.cur_line.text, Vector(960, 540) + Vector(0, 350));
-	};
+	};*/
 	return false;
 }
 
 bool EventScene::HandleEvent(SDL_Event* e)
 {
+	if (!IsFocused()) return false;
 	if (e->type == SDL_EVENT_MOUSE_BUTTON_UP) {
 		if (eh.showNextLine) {
 			eh.paused = false;
