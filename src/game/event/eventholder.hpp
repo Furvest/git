@@ -10,7 +10,9 @@ enum EventOpType {
 	DEFINE_ACTOR,
 	SAY_LINE,
 	PLAY_ANIM,
-	WAIT
+	WAIT,
+	CHANGE_FIELD,
+	WAIT_SPR_FINISH
 };
 
 struct EventOp {
@@ -32,6 +34,11 @@ struct EventTimer {
 	bool shouldDelete = false;
 };
 
+struct EventBlockActor {
+	std::string id;
+	bool shouldDelete = false;
+};
+
 class EventHolder {
 public:
 	~EventHolder() { SDL_Log("EventHolder destroyed!\n"); };
@@ -43,6 +50,7 @@ public:
 	int currentPos = 0;
 	std::vector<EventOp> event_ops;
 	std::vector<EventTimer> event_blocking_timers;
+	std::vector<EventBlockActor> event_blocking_actors;
 	std::vector<EventActor> actors;
 	size_t event_pos=0;
 	static EventOpType DecodeEventOpcode(const std::string& op);

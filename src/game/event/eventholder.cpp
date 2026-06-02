@@ -5,12 +5,16 @@
 #include <sstream>
 #include <charconv>
 
+#include "../gamestate.hpp"
+
 EventOpType EventHolder::DecodeEventOpcode(const std::string& op)
 {
 	if (op == "define_actor") return EventOpType::DEFINE_ACTOR;
 	if (op == "say_line") return EventOpType::SAY_LINE;
 	if (op == "play_anim") return EventOpType::PLAY_ANIM;
 	if (op == "wait") return EventOpType::WAIT;
+	if (op == "change_field") return EventOpType::CHANGE_FIELD;
+	if (op == "wait_spr_finish") return EventOpType::WAIT_SPR_FINISH;
 	return EventOpType::NOP;
 }
 
@@ -69,6 +73,24 @@ void EventHolder::HandleEventOp(EventOp& op)
 		event_blocking_timers.push_back(t);
 	};
 
+	if (op.opc == EventOpType::CHANGE_FIELD) {
+		g_GameState.cur_field = op.args[0];
+	};
+
+
+	if (op.opc == EventOpType::WAIT_SPR_FINISH) {
+		EventActor* actor = nullptr;
+		for (size_t i = 0; i < actors.size(); i++) {
+			if (actors[i].id == op.args[0]) {
+				actor = &actors[i];
+			};
+		};
+		if (!actor) { return; };
+		EventBlockActor block;
+		block.id = actor->id;
+		event_blocking_actors.push_back(block);
+	};
+
 };
 
 void EventHolder::AdvanceEvent(float delta)
@@ -84,6 +106,22 @@ void EventHolder::AdvanceEvent(float delta)
 		if (event_blocking_timers.size() != 0) {
 			return;
 		};
+		for (auto& actor_block : event_blocking_actors) {
+			EventActor* actor = nullptr;
+			for (size_t i = 0; i < actors.size(); i++) {
+				if (actors[i].id == actor_block.id) {
+					actor = &actors[i];
+				};
+			};
+			if (!actor) { actor_block.shouldDelete = true; continue; };
+			if (actor->spr.state.is_finished) {
+				actor_block.shouldDelete = true;
+			};
+		};
+		event_blocking_actors.erase(std::remove_if(event_blocking_actors.begin(), event_blocking_actors.end(), [](EventBlockActor& a) { return a.shouldDelete; }), event_blocking_actors.end());
+		if (event_blocking_actors.size() != 0) {
+			return;
+		};
 		if (currentPos < event_ops.size()) {
 			HandleEventOp(event_ops[currentPos]);
 			currentPos += 1;
@@ -97,7 +135,7 @@ void EventHolder::AdvanceEvent(float delta)
 void EventHolder::ParseScene(const std::filesystem::path& p)
 {
 //	std::ifstream input(p);
-	SDL_IOStream* io = SDL_IOFromFile(p.string().c_str(), "r");
+	SDL_IOStream* io = SDL_IOFromFile(p.string().c_str(), "rb");
 	if (!io) return;
 	size_t size = 0;
 

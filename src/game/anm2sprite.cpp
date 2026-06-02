@@ -220,7 +220,10 @@ namespace ANM2 {
 			double new_ratio = (double)(state.cur_frame-frame_begin_time + (double)state.cur_frame_accumulator) / (double)frame_data.Delay;
 			double old_ratio = 1.0 - new_ratio;
 			
-			ColorDesc col{ .R = frame_data.r*old_ratio + next_frame_data.r*new_ratio, .A=frame_data.alpha*old_ratio + next_frame_data.alpha*new_ratio };
+			ColorDesc col{ .R = frame_data.r*old_ratio + next_frame_data.r*new_ratio,
+				.G= frame_data.g * old_ratio + next_frame_data.g * new_ratio,
+				.B = frame_data.b * old_ratio + next_frame_data.b * new_ratio,
+				.A=frame_data.alpha*old_ratio + next_frame_data.alpha*new_ratio };
 
 			g_Renderer.Render(textures[sheet_id].tex, pos + Vector(frame_data.XPosition*old_ratio + next_frame_data.XPosition*new_ratio - frame_data.XPivot,
 				frame_data.YPosition*old_ratio + next_frame_data.YPosition*new_ratio - frame_data.YPivot),

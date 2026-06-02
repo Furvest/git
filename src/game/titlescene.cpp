@@ -4,6 +4,7 @@
 #include "anm2sprite.hpp"
 #include "fs.hpp"
 #include "eventscene.hpp"
+#include "field/fieldscene.hpp"
 
 
 TitleScene::TitleScene() {
@@ -73,7 +74,10 @@ bool TitleScene::HandleEvent(SDL_Event* e)
 
 		bool is_begin_hover = quit_button.IsPosInNullRect("ButtonRect", pos, title.GetNullLayerPos("Begin", Vector(0, 0)));
 		if (is_begin_hover) {
-			g_Manager.sceneManager.QueueScene(std::move(std::make_unique<EventScene>(FSManager::GetAssetFSPath() / "event/event1.tsv")));
+//			g_Manager.sceneManager.QueueScene(std::move(std::make_unique<EventScene>(FSManager::GetAssetFSPath() / "event/event1.tsv")));
+			auto field = std::make_unique<FieldScene>();
+			field->Focus();
+			g_Manager.sceneManager.QueueScene(std::move(field));
 			Unfocus();
 		};
 	};

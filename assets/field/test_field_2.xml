@@ -1,0 +1,3 @@
+<field anm2="gfx/test_field_2.anm2">
+	<object type="talk" null="Test" text="Взаимодействие с элементом"/>
+</field>

@@ -11,6 +11,4 @@ public:
 	bool Update(float delta) override;
 	bool Render(float delta) override;
 	bool HandleEvent(SDL_Event* e) override;
-	bool Focus() override { Scene::Focus(); return false; };
-	bool Unfocus() override { Scene::Unfocus(); return false; }
 };

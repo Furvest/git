@@ -21,7 +21,7 @@ namespace ANM2 {
 		out.YScale = e->FloatAttribute("YScale", 100.0f) / 100.0f;
 		out.Rotation = e->FloatAttribute("Rotation", 0.0f);
 		out.Visible = e->BoolAttribute("Visible", false);
-		out.Interpolated = e->BoolAttribute("Interpolated", false);
+		out.Interpolated = e->BoolAttribute("Interpolated", false);	
 		out.r = e->FloatAttribute("RedTint", 255.0f) / 255.0f;
 		out.g = e->FloatAttribute("GreenTint", 255.0f) / 255.0f;
 		out.b = e->FloatAttribute("BlueTint", 255.0f) / 255.0f;
@@ -32,6 +32,15 @@ namespace ANM2 {
 
 	void ANM2Data::Init(const std::filesystem::path& p)
 	{
+
+		spritesheets.clear();
+		layers.clear();
+		nulls.clear();
+		events.clear();
+		anims.clear();
+		information = {};
+		default_anim="";
+
 		SDL_IOStream* io=SDL_IOFromFile(p.string().c_str(), "rb");
 		if (!io) return;
 		size_t size = 0;
@@ -111,6 +120,7 @@ namespace ANM2 {
 			return;
 		};
 		default_anim = animations.ToElement()->Attribute("DefaultAnimation");
+		SDL_Log("Default anim is %s\n", default_anim.c_str());
 		{
 			auto anim = animations.FirstChildElement("Animation");
 			while (anim.ToElement()) {
