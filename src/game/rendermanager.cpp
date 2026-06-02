@@ -54,6 +54,9 @@ void Renderer::Render(SDL_Texture* tex, Vector pos, Quad crop_region, Vector piv
         SDL_FLIP_NONE
     );
 }
+
+
+
 void Renderer::RenderFont(const std::string& text, Vector pos) //функция дорогая! надо будет придумать способ рисовать получше
 {
     SDL_Color c;
@@ -63,8 +66,19 @@ void Renderer::RenderFont(const std::string& text, Vector pos) //функция 
     c.a = 255;
     TTF_Text* drawn_text=TTF_CreateText(text_engine, main_font, text.c_str(), text.size());
     TTF_SetTextColor(drawn_text, c.r, c.g, c.b, c.a);
+    TTF_DrawRendererText(drawn_text, pos.x+2, pos.y+2);
+    c.r = 255;
+    c.g = 255;
+    c.b = 255;
+    TTF_SetTextColor(drawn_text, c.r, c.g, c.b, c.a);
     TTF_DrawRendererText(drawn_text, pos.x, pos.y);
     TTF_DestroyText(drawn_text);
+};
+
+void Renderer::RenderFontCentered(const std::string& text, Vector pos) {
+    int w, h;
+    TTF_GetStringSize(main_font, text.c_str(), text.size(), &w, &h);
+    RenderFont(text, pos + Vector((float)w / (-2.0f), 0));
 };
 
 void Renderer::Init(SDL_Renderer* renderer) {

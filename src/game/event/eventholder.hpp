@@ -25,6 +25,7 @@ struct EventActor {
 	ANM2::Sprite spr;
 	std::string id;
 	std::string name;
+	int priority;
 	Vector pos=Vector(960,540);	//center
 };
 

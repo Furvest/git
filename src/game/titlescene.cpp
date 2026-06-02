@@ -76,8 +76,9 @@ bool TitleScene::HandleEvent(SDL_Event* e)
 		if (is_begin_hover) {
 //			g_Manager.sceneManager.QueueScene(std::move(std::make_unique<EventScene>(FSManager::GetAssetFSPath() / "event/event1.tsv")));
 			auto field = std::make_unique<FieldScene>();
-			field->Focus();
+			field->Unfocus();
 			g_Manager.sceneManager.QueueScene(std::move(field));
+			g_Manager.sceneManager.QueueScene(std::move(std::make_unique<EventScene>(FSManager::GetAssetFSPath() / "event/intro.tsv")));
 			Unfocus();
 		};
 	};

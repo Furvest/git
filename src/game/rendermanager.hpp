@@ -22,6 +22,7 @@ public:
 	void Init(SDL_Renderer* renderer);
 	void Render(SDL_Texture* tex, Vector pos, Quad crop_region, Vector pivot, Vector scale, double rotation,ColorDesc color);
 	void RenderFont(const std::string& text, Vector pos);
+	void RenderFontCentered(const std::string& text, Vector pos);
 };
 
 extern Renderer g_Renderer;

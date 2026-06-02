@@ -5,6 +5,7 @@
 #include "manager.hpp"
 class DialogueScene : public Scene {
 	DialogueHolder* data;
+	ANM2::Sprite box;
 public:
 	DialogueScene(DialogueHolder* d);
 	~DialogueScene();

@@ -1,3 +1,5 @@
 <field anm2="gfx/test_field_2.anm2">
-	<object type="talk" null="Test" text="Взаимодействие с элементом"/>
+	<object type="talk" null="Bar" text="Меня оттуда только что выволокли..."/>
+	<object type="talk" null="Store" text="Это магазин, нам туда пока не надо"/>
+	<object type="talk" null="Gate" text="Ну как бы надо сюда, но пока там ничего не готово!!!"/>
 </field>

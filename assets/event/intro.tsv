@@ -1,0 +1,29 @@
+tags	operation	arg0	arg1	arg2	arg3	arg4
+	define_actor	protag						
+	define_actor	barmen	Бармен						
+	define_actor	fem_char_invis	???						
+	define_actor	fem_char	Мари	female_char.anm2	99				
+	play_anim	fem_char	Nothing				
+	define_actor	blade_bg	BladeBG	blade_test.anm2			
+	define_actor	bar_bg	BarBG	bar_bg.anm2			
+	define_actor	bar_entrance_bg	BarEntranceBG	bar_entrance_bg.anm2			
+	play_anim	bar_bg	Nothing				
+	play_anim	bar_entrance_bg	Nothing				
+	play_anim	blade_bg	Intro				
+	wait_spr_finish	blade_bg					
+	play_anim	bar_bg	Intro				
+	say_line	protag	Гх...опять этот сон...				
+	say_line	protag	Этот меч...манит к себе...				
+	say_line	barmen	Эй, просыпайся, пьянчуга!				
+	say_line	barmen	Сколько ты тут уже дрыхнешь, а заплатил лишь за одну кружку!				
+	say_line	fem_char_invis	И-извините! Я заберу его отсюда...					
+	play_anim	bar_bg	Nothing				
+	play_anim	bar_entrance_bg	Intro				
+	play_anim	fem_char	Angry				
+	say_line	protag	Ах, да...					
+	say_line	fem_char	Какого чёрта? Мы же договаривалсь встретиться на площади!				
+	play_anim	fem_char	Default				
+	say_line	fem_char	Ну да ладно, перейдём к делу							
+	say_line	protag	Да, верно						
+	change_field	test_field_2					
+	event_end						

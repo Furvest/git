@@ -37,12 +37,18 @@ void EventHolder::HandleEventOp(EventOp& op)
 		EventActor actor;
 		actor.id = op.args[0];
 		actor.name = op.args[1];
+		auto r=std::from_chars(op.args[3].data(), op.args[3].data()+op.args[3].size(), actor.priority);
+		if (r.ec == std::errc()) {
+			actor.priority = 0;
+		};
 		actor.spr.Load(filePath.parent_path() / op.args[2]);
+		
 		actors.emplace_back(std::move(actor));
+		std::sort(actors.begin(), actors.end(), [](auto& a, auto& b) { return a.priority < b.priority; });
 	};
 
 	if (op.opc == EventOpType::SAY_LINE) {
-		EventActor* actor=nullptr;
+		EventActor* actor = nullptr;
 		for (size_t i = 0; i < actors.size(); i++) {
 			if (actors[i].id == op.args[0]) {
 				actor = &actors[i];
