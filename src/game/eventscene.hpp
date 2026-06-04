@@ -1,7 +1,22 @@
+/**
+ * @file eventscene.hpp
+ * @brief Заголовочный файл сцены события
+ *
+ */
+
 #include "scene.hpp"
 #include "anm2sprite.hpp"
 #include "event/eventholder.hpp"
 #include <filesystem>
+
+/**
+* @class EventScene
+* @brief Сцена события, наследуется от сцены
+*
+* Методы: отрисовка, обновление, обработка ивентов
+*
+*/
+
 class EventScene : public Scene {
 public:
 	EventScene(const std::filesystem::path& p);
