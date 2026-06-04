@@ -1,3 +1,11 @@
+/**
+ * @file anm2data.hpp
+ * @brief Данные для работы с anm2
+ *
+ * Здесь содержатся объявления структур и классов, позволяющих работать с anm2
+ * 
+ */
+
 #pragma once
 #include <filesystem>
 #include <string>
@@ -53,11 +61,18 @@ namespace ANM2 {
 		std::vector<Trigger> triggers;
 	};
 
+	/*!Данные об анимации: fps и время*/
 	struct AnimationInfo {
 		float fps = 30.0f;
 		float time = 1.0f / 30.0f;
 	};
-
+	/**
+	  * @class ANM2Data
+	  * @brief Данные для anm2
+	  *
+	  * Поля: вектора данных об ивентах, анимациях, слоях и проч.
+	  *
+	  */
 	class ANM2Data {
 	public:
 		ANM2Data() {};
