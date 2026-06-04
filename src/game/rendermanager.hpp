@@ -1,8 +1,25 @@
+/**
+ * @file rendermanager.hpp
+ * @brief Заголовочный файл менеджера отрисовщика
+ *
+ * Здесь содержится объявление класса Renderer, отвечающего за отрисовку текстур и текста
+ * Класс работает на основе встроенного отрисовщика SDL_Renderer 
+ */
+
 #pragma once
 #include <SDL3/SDL.h>
 #include "common/vector.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 #include <string>
+
+/**
+ * @class ColorDesc
+ * @brief Структура цвета
+ *
+ * Имеет 4 поля: R, G, B и A
+ * Определяет цвет в модели RGB, A - альфа-канал
+ * 
+ */
 
 struct ColorDesc {
 	double R=1.0;
@@ -10,6 +27,15 @@ struct ColorDesc {
 	double B=1.0;
 	double A=1.0;
 };
+
+/**
+ * @class Renderer
+ * @brief Отрисовщик текстур
+ *
+ * Приватное поле - ссылка на объект SDL_Renderer
+ * Публичные поля: глобальный масштаб, шрифт, движок текста
+ * Методы: инициализация, отрисовка текстур, шрифта и центрированного шрифта
+ */
 
 class Renderer {
 	SDL_Renderer* r=nullptr;
