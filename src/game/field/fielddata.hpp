@@ -4,7 +4,7 @@
 #include <string>
 
 
-enum FieldObjType {
+enum FieldObjType { /*!Перечисление типов объектов локации*/
 	FIELD_NOP,
 	EVENT,
 	TALK,
@@ -12,13 +12,13 @@ enum FieldObjType {
 };
 
 
-struct FieldObjectData {
+struct FieldObjectData { /*!Данные об объекте на локации*/
 	FieldObjType actionType=FieldObjType::FIELD_NOP;
 	std::string associated_null;
 	std::string text_data;
 };
 
-struct FieldData {
+struct FieldData { /*!Данные о локации*/
 	std::string anm2name;
 	std::filesystem::path anm2path;
 	std::filesystem::path path;
