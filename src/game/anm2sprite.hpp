@@ -1,3 +1,10 @@
+/**
+ * @file anm2sprite.hpp
+ * @brief Заголовочный файл работы со спрайтами в anm2
+ * 
+ */
+
+
 #pragma once
 #include "rendermanager.hpp"
 #include "anm2data.hpp"
