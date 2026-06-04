@@ -1,3 +1,9 @@
+/**
+ * @file fieldscene.hpp
+ * @brief Заголовочный файл локации
+ *
+ */
+
 #pragma once
 #include "../scene.hpp"
 #include "../dialogueholder.hpp"
@@ -5,6 +11,16 @@
 #include "../anm2sprite.hpp"
 #include "../manager.hpp"
 #include "fielddata.hpp"
+
+/**
+  * @class FieldScene
+  * @brief Класс локации
+  *
+  * Поля: название, спрайты и данные о диалогах
+  * Методы: Загрузка локации, отрисовка, обновление и обработка событий
+  *
+  */
+
 class FieldScene : public Scene {
 	FieldData d;
 	std::string last_name;
