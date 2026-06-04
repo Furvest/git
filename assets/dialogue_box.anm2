@@ -1,0 +1,37 @@
+<AnimatedActor>
+    <Info CreatedBy="robot" CreatedOn="06/02/2026 09:49:54 PM" Fps="30" Version="0"/>
+    <Content>
+        <Spritesheets>
+            <Spritesheet Id="0" Path="dialogue_box.png"/>
+        </Spritesheets>
+        <Layers>
+            <Layer Id="0" Name="Dialogue" SpritesheetId="0"/>
+        </Layers>
+        <Nulls>
+            <Null Id="0" Name="Title"/>
+            <Null Id="1" Name="Text"/>
+        </Nulls>
+        <Events/>
+    </Content>
+    <Animations DefaultAnimation="Default">
+        <Animation Name="Default" FrameNum="1" Loop="true">
+            <RootAnimation>
+                <Frame XPosition="0" YPosition="0" Delay="1" Visible="true" XScale="100" YScale="100" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+            </RootAnimation>
+            <LayerAnimations>
+                <LayerAnimation LayerId="0" Visible="true">
+                    <Frame XPivot="0" YPivot="0" XCrop="0" YCrop="0" Width="1920" Height="1080" XPosition="0" YPosition="0" Delay="1" Visible="true" XScale="100" YScale="100" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+                </LayerAnimation>
+            </LayerAnimations>
+            <NullAnimations>
+                <NullAnimation NullId="0" Visible="true">
+                    <Frame XPosition="960" YPosition="798" Delay="1" Visible="true" XScale="516" YScale="100" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+                </NullAnimation>
+                <NullAnimation NullId="1" Visible="true">
+                    <Frame XPosition="960" YPosition="908" Delay="1" Visible="true" XScale="1176" YScale="100" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+                </NullAnimation>
+            </NullAnimations>
+            <Triggers/>
+        </Animation>
+    </Animations>
+</AnimatedActor>

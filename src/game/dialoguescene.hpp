@@ -1,0 +1,34 @@
+/**
+ * @file dialoguescene.hpp
+ * @brief Заголовочный файл диалоговой сцены
+ *
+ * Здесь объявлен класс DialogueScene, который наследуется от базового Scene.
+ * Это диалоговая сцена, одна из самых частых в игре
+ *
+ */
+
+#pragma once
+#include "scene.hpp"
+#include "dialogueholder.hpp"
+#include "anm2sprite.hpp"
+#include "manager.hpp"
+
+/**
+  * @class DialogueScene
+  * @brief Класс диалоговой сцены
+  *
+  * Поля: данные обработчика диалогов и спрайт anm2
+  * Методы: обновление, отрисовка и обработка событий
+  *
+  */
+
+class DialogueScene : public Scene {
+	DialogueHolder* data;
+	ANM2::Sprite box;
+public:
+	DialogueScene(DialogueHolder* d);
+	~DialogueScene();
+	bool Update(float delta) override;
+	bool Render(float delta) override;
+	bool HandleEvent(SDL_Event* e) override;
+};

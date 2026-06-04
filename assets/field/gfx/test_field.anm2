@@ -1,0 +1,41 @@
+<AnimatedActor>
+    <Info CreatedBy="robot" CreatedOn="06/02/2026 04:40:25 PM" Fps="30" Version="0"/>
+    <Content>
+        <Spritesheets>
+            <Spritesheet Id="0" Path="test.png"/>
+        </Spritesheets>
+        <Layers>
+            <Layer Id="0" Name="base" SpritesheetId="0"/>
+        </Layers>
+        <Nulls>
+            <Null Id="0" Name="Test" ShowRect="true"/>
+            <Null Id="1" Name="Test2" ShowRect="true"/>
+            <Null Id="2" Name="Test3" ShowRect="true"/>
+        </Nulls>
+        <Events/>
+    </Content>
+    <Animations DefaultAnimation="test">
+        <Animation Name="test" FrameNum="1" Loop="true">
+            <RootAnimation>
+                <Frame XPosition="0" YPosition="0" Delay="1" Visible="true" XScale="100" YScale="100" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+            </RootAnimation>
+            <LayerAnimations>
+                <LayerAnimation LayerId="0" Visible="true">
+                    <Frame XPosition="0" YPosition="0" XPivot="960" YPivot="540" XCrop="0" YCrop="0" Width="1920" Height="1080" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="119" BlueTint="100" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+                </LayerAnimation>
+            </LayerAnimations>
+            <NullAnimations>
+                <NullAnimation NullId="0" Visible="true">
+                    <Frame XPosition="-586" YPosition="11" Delay="1" Visible="true" XScale="196" YScale="215" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+                </NullAnimation>
+                <NullAnimation NullId="1" Visible="true">
+                    <Frame XPosition="-108" YPosition="-29" Delay="1" Visible="true" XScale="214" YScale="266" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+                </NullAnimation>
+                <NullAnimation NullId="2" Visible="true">
+                    <Frame XPosition="491" YPosition="-4" Delay="1" Visible="true" XScale="244" YScale="276" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+                </NullAnimation>
+            </NullAnimations>
+            <Triggers/>
+        </Animation>
+    </Animations>
+</AnimatedActor>

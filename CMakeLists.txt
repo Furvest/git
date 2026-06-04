@@ -8,22 +8,39 @@ endif()
 
 project ("SDLGame")
 
-file(GLOB_RECURSE GAME_SRC "src/*.cpp" "src/*.hpp")
+file(GLOB_RECURSE GAME_SRC CONFIGURE_DEPENDS "src/*.cpp" "src/*.hpp")
 
 add_subdirectory(deps/SDL EXCLUDE_FROM_ALL)
+add_subdirectory(deps/SDL_ttf EXCLUDE_FROM_ALL)
+set(SDLMIXER_GME OFF CACHE BOOL "Support loading GME audio via game-music-emu" FORCE)
+add_subdirectory(deps/SDL_mixer EXCLUDE_FROM_ALL)
 add_subdirectory(deps/tinyxml2)
 
-add_executable (SDLGame ${GAME_SRC})
 
-target_link_libraries(SDLGame PRIVATE SDL3::SDL3 tinyxml2::tinyxml2)
-if (WIN32)
-add_custom_command(TARGET SDLGame POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
+if(ANDROID)
+    add_library(main SHARED ${GAME_SRC})
+    set(TARGET_NAME main)
+else()
+    add_executable(SDLGame ${GAME_SRC})
+    set(TARGET_NAME SDLGame)
 endif()
-#add_custom_command(TARGET SDLGame POST_BUILD COMMAND "${CMAKE_COMMAND}" -E make_directory ${CMAKE_BINARY_DIR}/assets $<TARGET_FILE_DIR:SDLGame> VERBATIM)
-#add_custom_command(TARGET SDLGame POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy ${CMAKE_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/assets VERBATIM)
+
+target_link_libraries(${TARGET_NAME} PRIVATE SDL3::SDL3 tinyxml2::tinyxml2 SDL3_ttf::SDL3_ttf SDL3_mixer::SDL3_mixer)
+if (WIN32)
+add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
+add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_ttf::SDL3_ttf-shared> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
+add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_mixer::SDL3_mixer-shared> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
+add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:tinyxml2::tinyxml2> $<TARGET_FILE_DIR:SDLGame> VERBATIM)
+endif()
+
+add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_SOURCE_DIR}/assets
+            $<TARGET_FILE_DIR:${TARGET_NAME}>/assets
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET SDLGame PROPERTY CXX_STANDARD 20)
+  set_property(TARGET ${TARGET_NAME} PROPERTY CXX_STANDARD 20)
 endif()
 
 # судя по всему оно не работает при открытии cmakelists напрямую в visual studio

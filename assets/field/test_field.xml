@@ -1,0 +1,5 @@
+<field anm2="gfx/test_field.anm2">
+	<object type="talk" null="Test" text="Взаимодействие с элементом"/>
+	<object type="next_field" null="Test2" text="test_field_2"/>
+	<object type="event" null="Test3" text="event1"/>
+</field>
