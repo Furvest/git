@@ -1,3 +1,12 @@
+/**
+ * @file eventholder.hpp
+ * @brief Заголовочный файл обработчика событий
+ *
+ * Нужен для обработки событий игры, декодирования операций из файла
+ * и отрисовки диалогов
+ *
+ */
+
 #pragma once
 #include <filesystem>
 #include "../anm2sprite.hpp"
@@ -5,6 +14,7 @@
 #include "../dialogueholder.hpp"
 #include <list>
 
+/*!Перечисление операций событий*/
 enum EventOpType {
 	NOP,
 	DEFINE_ACTOR,
@@ -39,6 +49,16 @@ struct EventBlockActor {
 	std::string id;
 	bool shouldDelete = false;
 };
+
+/**
+   * @class EventHolder
+   * @brief Обработчик событий
+   *
+   * Отвечает за обработку событий и взаимодействие NPC с игроком
+   * Работает с операциями указанными в перечислении
+   * Список диалогов в специальном формате
+   *
+   */
 
 class EventHolder {
 public:
